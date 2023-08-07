@@ -164,6 +164,7 @@ public func verifySnapshot<Value, Format>(
   matching value: @autoclosure () throws -> Value,
   as snapshotting: Snapshotting<Value, Format>,
   named name: String? = nil,
+  originalFileName: String? = nil,
   record recording: Bool = false,
   snapshotDirectory: String? = nil,
   timeout: TimeInterval = 5,
@@ -200,7 +201,7 @@ public func verifySnapshot<Value, Format>(
 
       let testName = sanitizePathComponent(testName)
       let snapshotFileUrl = snapshotDirectoryUrl
-        .appendingPathComponent("\(testName).\(identifier)")
+        .appendingPathComponent(originalFileName ?? "\(testName).\(identifier)")
         .appendingPathExtension(snapshotting.pathExtension ?? "")
       let fileManager = FileManager.default
       try fileManager.createDirectory(at: snapshotDirectoryUrl, withIntermediateDirectories: true)
